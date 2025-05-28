@@ -5,6 +5,10 @@ require 'vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Font;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Color;
 
 // Check admin role
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
@@ -57,6 +61,22 @@ $sheet->setCellValue('D1', 'Quantity');
 $sheet->setCellValue('E1', 'Remaining Items');
 $sheet->setCellValue('F1', 'Expiration Date');
 
+// Style header row
+$headerStyle = [
+    'font' => [
+        'bold' => true,
+        'color' => ['rgb' => 'FFFFFF'],
+    ],
+    'fill' => [
+        'fillType' => Fill::FILL_SOLID,
+        'startColor' => ['rgb' => '012365'],
+    ],
+    'alignment' => [
+        'horizontal' => Alignment::HORIZONTAL_CENTER,
+    ],
+];
+$sheet->getStyle('A1:F1')->applyFromArray($headerStyle);
+
 // Add data rows
 $row = 2;
 foreach ($inventory as $item) {
@@ -65,17 +85,52 @@ foreach ($inventory as $item) {
     $sheet->setCellValue('C' . $row, number_format($item['unit_cost'], 2));
     $sheet->setCellValue('D' . $row, $item['quantity']);
     $sheet->setCellValue('E' . $row, $item['remaining_items']);
-    $sheet->setCellValue('F' . $row, $item['expiration_date']);
+
+    // Format expiration date as mm/dd/yyyy
+    $expirationDate = $item['expiration_date'];
+    $expirationColor = '000000'; // Black by default
+    if ($expirationDate) {
+        $date = new DateTime($expirationDate);
+        $month = $date->format("F");
+        $day = $date->format("d");
+        $year = $date->format("Y");
+        $expirationDate = $month . " " . $day . ", " . $year;
+
+        // Calculate expiration status
+        $now = new DateTime('now', new DateTimeZone('UTC'));
+        $expiration = new DateTime($item['expiration_date'], new DateTimeZone('UTC'));
+        $interval = $now->diff($expiration);
+        $months = $interval->m + ($interval->y * 12);
+
+        if ($expiration < $now) {
+            $expirationColor = 'FF0000'; // Red - Expired
+        } elseif ($months < 2) {
+            $expirationColor = 'FF0000'; // Red - Less than 3 months
+        } elseif ($months <= 6) {
+            $expirationColor = '0000FF'; // Blue - Between 3-6 months
+        }
+    }
+    $sheet->setCellValue('F' . $row, $expirationDate);
+
+    // Set text color for expiration date
+    $sheet->getStyle('F' . $row)->getFont()->setColor(new Color($expirationColor));
+
+    // Center text in data rows
+    $sheet->getStyle('A' . $row . ':F' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
     $row++;
 }
 
 // Set column widths
-$sheet->getColumnDimension('A')->setWidth(30);
-$sheet->getColumnDimension('B')->setWidth(15);
-$sheet->getColumnDimension('C')->setWidth(15);
-$sheet->getColumnDimension('D')->setWidth(10);
-$sheet->getColumnDimension('E')->setWidth(15);
-$sheet->getColumnDimension('F')->setWidth(15);
+$sheet->getColumnDimension('A')->setWidth(40);
+$sheet->getColumnDimension('B')->setWidth(20);
+$sheet->getColumnDimension('C')->setWidth(20);
+$sheet->getColumnDimension('D')->setWidth(15);
+$sheet->getColumnDimension('E')->setWidth(20);
+$sheet->getColumnDimension('F')->setWidth(20);
+
+// Set number format for selling price and unit cost
+$sheet->getStyle('B2:C' . ($row - 1))->getNumberFormat()->setFormatCode('#,##0.00');
 
 // Rename worksheet
 $sheet->setTitle('Inventory');

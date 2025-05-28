@@ -357,8 +357,8 @@ function getExpirationStatus($expirationDateStr)
         $expirationDate->setTime(0, 0, 0);
 
         // Calculate dates for comparison
-        $threeMonthsFromNow = clone $now;
-        $threeMonthsFromNow->modify('+3 months');
+        $twoMonthsFromNow = clone $now;
+        $twoMonthsFromNow->modify('+2 months');
         $sixMonthsFromNow = clone $now;
         $sixMonthsFromNow->modify('+6 months');
 
@@ -366,7 +366,7 @@ function getExpirationStatus($expirationDateStr)
 
         if ($expirationDate < $now) {
             return ['text' => $formattedDate, 'color' => 'red']; // Expired
-        } elseif ($expirationDate <= $threeMonthsFromNow) {
+        } elseif ($expirationDate <= $twoMonthsFromNow) {
             return ['text' => $formattedDate, 'color' => 'red']; // Less than 3 months
         } elseif ($expirationDate <= $sixMonthsFromNow) {
             return ['text' => $formattedDate, 'color' => 'blue']; // Between 3-6 months
@@ -411,7 +411,6 @@ function generatePagination($page, $totalPages, $searchParam)
 
 $searchParam = isset($_GET['search']) && $_GET['search'] !== '' ? 'search=' . urlencode($_GET['search']) . '&' : '';
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -420,82 +419,93 @@ $searchParam = isset($_GET['search']) && $_GET['search'] !== '' ? 'search=' . ur
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin: Inventory Management</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="images/sti_logo.png" type="image/png">
+    <link rel="icon" href="images/Logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.24/jspdf.plugin.autotable.min.js"></script>
-    <style>
-        .forms-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .inventory-form {
-            flex: 1;
-            min-width: 300px;
-            max-width: 48%;
-            box-sizing: border-box;
-        }
-
-        @media (max-width: 768px) {
-            .inventory-form {
-                max-width: 100%;
-            }
-        }
-    </style>
 </head>
 
 <body>
     <div class="dashboard-container">
-        <div class="sidebar">
+        <aside class="sidebar">
             <h2>Drugstore Inventory</h2>
             <ul class="menu">
-                <li><a href="admin_inventory.php" class="active">Inventory</a></li>
-                <li><a href="logout.php" class="logout">Logout</a></li>
+                <li><a href="admin_inventory.php" class="inventory menu-item"><img src="images/inventory.png" alt="Inventory Icon" class="menu-icon-img" style="width: 15px; height: 15px;">
+                        Inventory</a></li>
+                <li><a href="logout.php" class="logout menu-item"><img src="images/logout.png" alt="Inventory Icon" class="menu-icon-img" style="width: 15px; height: 15px;"></i> Logout</a></li>
             </ul>
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="checkbox">
                     <input type="checkbox" id="checkbox" />
                     <div class="slider round"></div>
                 </label>
-                <em>Toggle Mode</em>
+                <em><i class="fas fa-lightbulb"></i> Light Mode</em>
             </div>
-        </div>
-        <div class="main-content">
+        </aside>
+        <main class="main-content">
             <h1>Admin: Inventory Management</h1>
+
+            <div class="top-controls-bar">
+                <div class="search-bar">
+                    <form method="GET" action="admin_inventory.php">
+                        <input type="text" name="search" placeholder="Search item..."
+                            value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
+                        <?php if (isset($_GET['search']) && !empty($_GET['search'])): ?>
+
+                            <a href="admin_inventory.php" class="reset-search-btn" title="Clear Search"><i
+                                    class="fas fa-times"></i></a>
+                        <?php endif; ?>
+                    </form>
+                </div>
+
+                <div class="header-actions-group">
+                    <form id="clear-table-form" method="POST" action="admin_inventory.php" style="display: inline;"
+                        onsubmit="return confirm('Are you sure you want to clear the entire inventory? This action cannot be undone.');">
+                        <input type="hidden" name="clear" value="1">
+                        <button type="submit" class="btn-action btn-clear-inventory">
+                            <i class="fas fa-trash-alt"></i> Clear Inventory
+                        </button>
+                    </form>
+                    <button id="download-inventory-excel" class="btn-action btn-download-excel">
+                        <i class="fas fa-file-excel"></i> Download Excel
+                    </button>
+                    <button id="download-inventory-pdf" class="btn-action btn-download-pdf">
+                        <i class="fas fa-file-pdf"></i> Download PDF
+                    </button>
+                </div>
+            </div>
+
+
             <?php if (isset($_SESSION['message'])): ?>
                 <div class="success-message">
                     <?= htmlspecialchars($_SESSION['message']) ?>
                 </div>
+                <script>
+                    setTimeout(function () {
+                        const successMessage = document.querySelector('.success-message');
+                        if (successMessage) {
+                            successMessage.style.display = 'none';
+                        }
+                    }, 3000);
+                </script>
                 <?php unset($_SESSION['message']); ?>
             <?php endif; ?>
             <?php if (isset($_SESSION['error'])): ?>
                 <div class="error-message">
                     <?= nl2br(htmlspecialchars($_SESSION['error'])) ?>
                 </div>
+                <script>
+                    setTimeout(function () {
+                        const errorMessage = document.querySelector('.error-message');
+                        if (errorMessage) {
+                            errorMessage.style.display = 'none';
+                        }
+                    }, 3000);
+                </script>
                 <?php unset($_SESSION['error']); ?>
             <?php endif; ?>
-            <div class="header-actions">
-                <div class="search-bar">
-                    <form method="GET" action="admin_inventory.php">
-                        <input type="text" name="search" placeholder="Search item..."
-                            value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
-                        <?php if (isset($_GET['search']) && !empty($_GET['search'])): ?>
-                            <a href="admin_inventory.php">Reset Search</a>
-                        <?php endif; ?>
-                    </form>
-                </div>
-                <div class="table-actions">
-                    <form id="clear-table-form" method="POST" action="admin_inventory.php" style="display: inline;">
-                        <input type="hidden" name="clear" value="1">
-                        <button type="submit" class="clear-btn">Clear Inventory</button>
-                    </form>
-                    <button id="download-inventory-excel" class="download-excel-btn">Download Excel</button>
-                    <button id="download-inventory-pdf" class="download-pdf-btn">Download PDF</button>
-                </div>
-            </div>
+
             <table id="table-inventory">
                 <thead>
                     <tr>
@@ -540,11 +550,13 @@ $searchParam = isset($_GET['search']) && $_GET['search'] !== '' ? 'search=' . ur
                     <?php endif; ?>
                 </tbody>
             </table>
+
             <?php if ($totalCount > 0 && $totalPages > 1): ?>
                 <div class="pagination">
                     <?= generatePagination($page, $totalPages, $searchParam) ?>
                 </div>
             <?php endif; ?>
+
             <div class="forms-wrapper">
                 <div class="inventory-form">
                     <h3 id="form-title">Add Inventory Item</h3>
@@ -572,18 +584,12 @@ $searchParam = isset($_GET['search']) && $_GET['search'] !== '' ? 'search=' . ur
                             <div class="date-dropdowns">
                                 <select id="exp-month" name="exp-month" required>
                                     <option value="">Month</option>
-                                    <option value="1">January</option>
-                                    <option value="2">February</option>
-                                    <option value="3">March</option>
-                                    <option value="4">April</option>
-                                    <option value="5">May</option>
-                                    <option value="6">June</option>
-                                    <option value="7">July</option>
-                                    <option value="8">August</option>
-                                    <option value="9">September</option>
-                                    <option value="10">October</option>
-                                    <option value="11">November</option>
-                                    <option value="12">December</option>
+                                    <?php
+                                    $months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                                    foreach ($months as $i => $monthName) {
+                                        echo "<option value='" . ($i + 1) . "'>$monthName</option>";
+                                    }
+                                    ?>
                                 </select>
                                 <select id="exp-day" name="exp-day" required>
                                     <option value="">Day</option>
@@ -593,18 +599,22 @@ $searchParam = isset($_GET['search']) && $_GET['search'] !== '' ? 'search=' . ur
                                 </select>
                                 <select id="exp-year" name="exp-year" required>
                                     <option value="">Year</option>
-                                    <?php for ($y = 2010; $y <= date('Y') + 10; $y++): ?>
+                                    <?php for ($y = date('Y') - 5; $y <= date('Y') + 10; $y++): ?>
                                         <option value="<?= $y ?>"><?= $y ?></option>
                                     <?php endfor; ?>
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" id="form-submit-btn" name="add_item" class="btn btn-primary w-100">Add
-                            Item</button>
-                        <button type="button" id="cancel-edit-btn" class="btn-secondary"
-                            style="display: none; margin-top: 5px;" onclick="resetForm()">Cancel Edit</button>
+                        <button type="submit" id="form-submit-btn" name="add_item" class="btn btn-primary w-100">
+                            <i class="fas fa-plus-circle"></i> Add Item
+                        </button>
+                        <button type="button" id="cancel-edit-btn" class="btn btn-secondary w-100"
+                            style="display: none; margin-top: 10px;" onclick="resetForm()">
+                            <i class="fas fa-times-circle"></i> Cancel Edit
+                        </button>
                     </form>
                 </div>
+
                 <div class="inventory-form">
                     <h3>Get Inventory Item</h3>
                     <form id="get-item-form" method="POST" action="admin_inventory.php">
@@ -631,40 +641,56 @@ $searchParam = isset($_GET['search']) && $_GET['search'] !== '' ? 'search=' . ur
                             <label for="dispense-quantity">Quantity to Dispense</label>
                             <input type="number" id="dispense-quantity" name="dispense_quantity" min="0">
                         </div>
-                        <button type="submit" name="dispense" class="btn btn-primary w-100">Dispense Quantity</button>
+                        <button type="submit" name="dispense" class="btn btn-primary w-100">
+                            <i class="fas fa-dolly"></i> Dispense Quantity
+                        </button>
                     </form>
                 </div>
             </div>
+
             <div class="excel-import">
                 <h3>Import from Excel</h3>
                 <form method="POST" enctype="multipart/form-data" action="admin_inventory.php">
-                    <label for="excel-file">Choose File (.xlsx)</label>
-                    <input type="file" name="excel-file" id="excel-file" accept=".xlsx" required>
-                    <button type="submit" class="btn btn-primary w-100">Upload Excel</button>
+                    <div class="form-group">
+                        <label for="excel-file">Choose File (.xlsx)</label>
+                        <input type="file" name="excel-file" id="excel-file" accept=".xlsx" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-file-upload"></i> Upload Excel
+                    </button>
                 </form>
             </div>
-        </div>
+        </main>
     </div>
     <script>
+        // ... (your existing JavaScript code)
+        // Minor update for theme toggle text
         const themeToggle = document.getElementById('checkbox');
+        const themeLabel = document.querySelector('.theme-switch-wrapper em');
         const currentTheme = localStorage.getItem('theme');
+
+        function updateThemeLabel(isDarkMode) {
+            if (isDarkMode) {
+                themeLabel.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+            } else {
+                themeLabel.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+            }
+        }
+
         if (currentTheme === 'dark') {
             document.body.classList.add('dark-mode');
             themeToggle.checked = true;
+            updateThemeLabel(true);
+        } else {
+            updateThemeLabel(false);
         }
+
         themeToggle.addEventListener('change', function () {
             document.body.classList.toggle('dark-mode', this.checked);
             localStorage.setItem('theme', this.checked ? 'dark' : 'light');
+            updateThemeLabel(this.checked);
         });
 
-        const clearForm = document.getElementById('clear-table-form');
-        if (clearForm) {
-            clearForm.addEventListener('submit', function (event) {
-                if (!confirm('Are you sure you want to clear the ENTIRE inventory? This action cannot be undone.')) {
-                    event.preventDefault();
-                }
-            });
-        }
 
         const removeForms = document.querySelectorAll('.remove-form');
         removeForms.forEach(form => {
@@ -688,26 +714,62 @@ $searchParam = isset($_GET['search']) && $_GET['search'] !== '' ? 'search=' . ur
 
             if (itemName === '') {
                 alert('Item name cannot be empty.');
+                setTimeout(function () {
+                    const alertBox = document.querySelector('.alert');
+                    if (alertBox) {
+                        alertBox.remove();
+                    }
+                }, 3000);
                 return false;
             }
             if (isNaN(sellingPrice) || sellingPrice < 0) {
                 alert('Selling price must be non-negative.');
+                setTimeout(function () {
+                    const alertBox = document.querySelector('.alert');
+                    if (alertBox) {
+                        alertBox.remove();
+                    }
+                }, 3000);
                 return false;
             }
             if (isNaN(unitCost) || unitCost < 0) {
                 alert('Unit cost must be non-negative.');
+                setTimeout(function () {
+                    const alertBox = document.querySelector('.alert');
+                    if (alertBox) {
+                        alertBox.remove();
+                    }
+                }, 3000);
                 return false;
             }
             if (isNaN(remainingItems) || remainingItems < 0 || !Number.isInteger(remainingItems)) {
                 alert('Remaining items must be a whole number (0 or greater).');
+                setTimeout(function () {
+                    const alertBox = document.querySelector('.alert');
+                    if (alertBox) {
+                        alertBox.remove();
+                    }
+                }, 3000);
                 return false;
             }
             if (remainingItems > 1000) {
                 alert('Remaining items cannot exceed 1000.');
+                setTimeout(function () {
+                    const alertBox = document.querySelector('.alert');
+                    if (alertBox) {
+                        alertBox.remove();
+                    }
+                }, 3000);
                 return false;
             }
             if (!expMonth || !expDay || !expYear) {
                 alert('Expiration date must be complete.');
+                setTimeout(function () {
+                    const alertBox = document.querySelector('.alert');
+                    if (alertBox) {
+                        alertBox.remove();
+                    }
+                }, 3000);
                 return false;
             }
 
@@ -717,13 +779,19 @@ $searchParam = isset($_GET['search']) && $_GET['search'] !== '' ? 'search=' . ur
             const date = new Date(year, month - 1, day);
             if (date.getFullYear() !== year || date.getMonth() + 1 !== month || date.getDate() !== day) {
                 alert('Invalid expiration date.');
+                setTimeout(function () {
+                    const alertBox = document.querySelector('.alert');
+                    if (alertBox) {
+                        alertBox.remove();
+                    }
+                }, 3000);
                 return false;
             }
 
             return true;
         }
 
-        const logoutLink = document.querySelector('.logout');
+        const logoutLink = document.querySelector('.sidebar .logout'); // Adjusted selector
         if (logoutLink) {
             logoutLink.addEventListener('click', function (event) {
                 event.preventDefault();
@@ -734,7 +802,9 @@ $searchParam = isset($_GET['search']) && $_GET['search'] !== '' ? 'search=' . ur
         }
 
         function populateEditForm(item) {
+            const inventoryForm = document.querySelector('.inventory-form');
             document.getElementById('form-title').textContent = 'Edit Inventory Item';
+            inventoryForm.classList.add('highlighted');
             document.getElementById('item-id').value = item.id;
             document.getElementById('item-name').value = item.name;
             document.getElementById('selling-price').value = item.selling_price;
@@ -841,16 +911,50 @@ $searchParam = isset($_GET['search']) && $_GET['search'] !== '' ? 'search=' . ur
             pdf.setFontSize(10);
             pdf.setFont("helvetica", "normal");
             const inventoryData = <?php echo json_encode($inventoryForPdf); ?>.map(item => {
-                const status = getExpirationStatus(item[5]);
+                let expirationDate = item[5];
+                let expirationColor = 'black'; // Default color
+
+                if (expirationDate) {
+                    const now = new Date();
+                    const expiration = new Date(expirationDate);
+                    const twoMonthsFromNow = new Date();
+                    twoMonthsFromNow.setMonth(now.getMonth() + 2);
+                    const sixMonthsFromNow = new Date();
+                    sixMonthsFromNow.setMonth(now.getMonth() + 6);
+
+                    if (expiration < now) {
+                        expirationColor = 'red'; // Expired
+                    } else if (expiration <= twoMonthsFromNow) {
+                        expirationColor = 'red'; // Less than 3 months
+                    } else if (expiration <= sixMonthsFromNow) {
+                        expirationColor = 'blue'; // Between 3-6 months
+                    }
+
+                    // Format the expiration date to month name/dd/yyyy
+                    const monthNames = ["January", "February", "March", "April", "May", "June",
+                        "July", "August", "September", "October", "November", "December"
+                    ];
+                    const monthName = monthNames[expiration.getMonth()];
+                    const formattedDate = monthName + ' ' + expiration.getDate().toString().padStart(2, '0') + ', ' + expiration.getFullYear();
+
+                    expirationDate = formattedDate;
+                }
+
                 return [
                     item[0],
                     item[1],
                     item[2],
                     item[3],
                     item[4],
-                    status.text
+                    {
+                        content: expirationDate,
+                        styles: {
+                            textColor: expirationColor
+                        }
+                    }
                 ];
             });
+
             pdf.autoTable({
                 startY: 25,
                 head: [

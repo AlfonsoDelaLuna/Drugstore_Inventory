@@ -1,1542 +1,639 @@
-/* General Reset */
-body {
+/* style.css for admin_inventory.php */
+:root {
+  --font-family: "Inter", sans-serif;
+
+  /* Light Mode (Default) */
+  --bg-sidebar: #9c0202; /* Red */
+  --sidebar-text: #ffffff;
+  --sidebar-active-bg: #a92222;
+  --sidebar-hover-bg: #440202;
+  --bg-main: #f4f6f8; /* Light grey */
+  --bg-card: #ffffff;
+  --text-primary: #1f2937; /* Dark grey */
+  --text-secondary: #6b7280;
+  --border-color: #e5e7eb;
+  --input-bg: #ffffff;
+  --input-border: #d1d5db;
+  --input-text: #1f2937;
+  --table-header-bg: #e5e7eb;
+  --table-header-text: #374151;
+  --button-primary-bg: #2563eb; /* Blue */
+  --button-primary-text: #ffffff;
+  --button-green-bg: #059669;
+  --button-red-bg: #dc2626;
+  --button-yellow-bg: #f59e0b;
+  --button-secondary-bg: #6b7280;
+  --button-secondary-text: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --expiration-expired-text: #dc2626; /* Red for expired */
+  --expiration-soon-text: #2563eb; /* Blue for expiring soon (3-6 months in image) */
+}
+
+body.dark-mode {
+  --bg-sidebar: #9c0202; /* Darker Red */
+  --sidebar-text: #f3f4f6;
+  --sidebar-active-bg: #991b1b;
+  --sidebar-hover-bg: #440202;
+  --bg-main: #111827; /* Very Dark Blue/Gray */
+  --bg-card: #1f2937; /* Dark Blue/Gray */
+  --text-primary: #f3f4f6; /* Light Gray */
+  --text-secondary: #9ca3af;
+  --border-color: #374151;
+  --input-bg: #374151;
+  --input-border: #4b5563;
+  --input-text: #f3f4f6;
+  --table-header-bg: #374151;
+  --table-header-text: #d1d5db;
+  --expiration-expired-text: #f87171; /* Lighter Red for dark mode */
+  --expiration-soon-text: #60a5fa; /* Lighter Blue for dark mode */
+}
+
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Source Sans Pro", sans-serif;
-  background: #f8f9fa;
-  color: #2b2b2b;
-  font-size: 24.6px; /* 16px * 1.54 */
 }
 
-/* Dark Mode for Body */
-body.dark-mode {
-  background-color: #333;
-  color: #e0e0e0;
-}
-
-/* Dashboard Layout (Used for Admin: Login Sheet) */
-.dashboard-container {
+body {
+  font-family: var(--font-family);
   display: flex;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  transition: background-color 0.3s, color 0.3s;
   min-height: 100vh;
 }
 
-/* Dark Mode for Dashboard Container */
-body.dark-mode .dashboard-container {
-  background-color: #444;
+.dashboard-container {
+  display: flex;
+  width: 100%;
+}
+
+.inventory-form.highlighted {
+  background-color: rgb(153, 145, 255);
+  transition: background-color 0.3s;
+}
+
+.inventory-form.highlighted h3 {
+  color: #000000;
+}
+.inventory-form.highlighted label {
+  color: #000000;
 }
 
 /* Sidebar */
 .sidebar {
-  width: 308px; /* 200px * 1.54 */
-  background: #8b0000; /* Changed from #1b263b to dark red */
-  color: #fff;
-  padding: 30.8px; /* 20px * 1.54 */
-  flex-shrink: 0;
+  width: 260px;
+  background-color: var(--bg-sidebar);
+  color: var(--sidebar-text);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
 }
 
 .sidebar h2 {
-  margin: 0 0 30.8px;
-  font-size: 30.8px; /* 20px * 1.54 */
-  font-weight: normal;
-  letter-spacing: 0.77px; /* 0.5px * 1.54 */
+  font-size: 24px;
+  margin-bottom: 30px;
+  text-align: left; /* Matches image */
+  padding-left: 10px;
 }
 
-/* Dark Mode for Sidebar */
-body.dark-mode .sidebar {
-  background: #460a0a; /* Darker, more formal blue */
-}
-
-body.dark-mode .sidebar ul li a {
-  color: #ffffff;
-}
-
-.menu {
+.sidebar .menu {
   list-style: none;
   padding: 0;
+  flex-grow: 1;
 }
 
-.menu li {
-  margin-bottom: 10px;
-}
-
-.menu a {
-  color: #fff;
+.sidebar .menu li a {
+  display: block;
+  color: var(--sidebar-text);
   text-decoration: none;
-  display: block;
-  padding: 10px;
-  border-radius: 5px;
-  transition: background 0.3s ease, color 0.3s ease; /* Smooth transitions */
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+  font-weight: 500;
 }
 
-.menu a.active {
-  background: #c9a227; /* Muted gold for active link */
-  color: #8b0000; /* Changed from #1b263b */
+.sidebar .menu li a[href="admin_inventory.php"] {
+  background-color: var(--button-primary-bg);
 }
 
-.menu a:hover:not(.logout) {
-  background: #c9a227;
-  color: #8b0000;
+.sidebar .menu li a[href="logout.php"] {
+  background-color: var(--button-red-bg);
 }
 
-.menu a.logout {
-  background: #a61c1c; /* Muted red for logout button */
+.sidebar .menu li a:hover {
+  background-color: var(--sidebar-hover-bg);
 }
-
-.menu a.logout:hover {
-  background: #821616; /* Darker red on hover */
-}
-
-/* Main Content Area */
-.main-content {
-  flex: 1;
-  padding: 38.5px; /* 25px * 1.54 */
-  background: #e4e5f1;
-  overflow-y: auto;
-}
-
-.main-content h1 {
-  margin: 0 0 23.1px;
-  font-size: 40.04px; /* 26px * 1.54 */
-  text-align: center;
-  font-weight: normal;
-  color: #8b0000; /* Changed from #1b263b */
-}
-
-.main-content h2 {
-  margin: 0 0 23.1px;
-  font-size: 27.72px; /* 18px * 1.54 */
-  text-align: left;
-  font-weight: normal;
-}
-
-/* Dark Mode for Main Content */
-body.dark-mode .main-content {
-  background-color: #1e1e1e;
-  color: #e0e0e0;
-}
-
-body.dark-mode h1,
-body.dark-mode h2 {
-  color: #ffffff;
-}
-
-/* Form Layout (Add New Entry Form in Admin: Login Sheet) */
-#login-sheet-form {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15.4px 23.1px; /* 10px * 1.54, 15px * 1.54 */
-  padding: 30.8px;
-  max-width: 2618px; /* 1700px * 1.54 */
-  margin: 46.2px auto;
-  background: #fafafa;
-  border: 1.54px solid #d9d9d9; /* 1px * 1.54 */
-  border-radius: 7.7px; /* 5px * 1.54 */
-  box-shadow: 0 7.7px 23.1px rgba(0, 0, 0, 0.01);
-}
-
-/* Dark Mode for Login Sheet Form */
-body.dark-mode #login-sheet-form {
-  background-color: #3d3c3c;
-  border: 1px solid #3d3c3c;
-}
-
-body.dark-mode #login-sheet-form .form-group label {
-  color: #ffffff;
-}
-
-body.dark-mode #login-sheet-form input,
-body.dark-mode #login-sheet-form select,
-body.dark-mode #login-sheet-form textarea {
-  background-color: #3d3c3c;
-  color: #ffffff;
-  border: 1px solid #777;
-}
-
-body.dark-mode #login-sheet-form input[readonly],
-body.dark-mode #login-sheet-form select[disabled] {
-  background-color: #777;
-}
-
-body.dark-mode #login-sheet-form .error {
-  color: #ff6666; /* Slightly lighter red for better visibility */
-}
-
-body.dark-mode #login-sheet-form .submit-group .btn {
-  background-color: #0056b3;
-  border: 1px solid #0056b3;
-}
-
-body.dark-mode #login-sheet-form .submit-group .btn:hover {
-  background-color: #003d82;
-}
-
-#login-sheet-form .form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Helper classes for spanning columns */
-#login-sheet-form .form-group-span-3 {
-  grid-column: span 3;
-}
-
-/* Ensure inputs, selects, and textareas are compact */
-#login-sheet-form input,
-#login-sheet-form select,
-#login-sheet-form textarea {
-  width: 100%;
-  padding: 8px;
-  font-size: 14px;
-  height: 38px;
-  border: 1px solid #d9d9d9;
-  border-radius: 3px;
-  box-sizing: border-box;
-  background: #fff; /* Updated from #ccc to match other pages */
-  transition: all 0.2s ease;
-}
-
-#login-sheet-form textarea {
-  height: 70px;
-}
-
-#login-sheet-form label {
-  margin-bottom: 6.16px; /* 4px * 1.54 */
-  font-size: 20.02px; /* 13px * 1.54 */
-  font-weight: 700;
-  color: #2b2b2b;
-}
-/* Adjust dropdown arrows */
-#login-sheet-form select {
-  appearance: none;
-  background: url('data:image/svg+xml;utf8,<svg fill="gray" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>')
-    no-repeat right 5px center;
-  background-size: 12px;
-  padding-right: 20px;
-}
-
-/* Adjust the button */
-#login-sheet-form .submit-group {
-  grid-column: 1 / 2; /* Only take the first column */
-  text-align: left;
-}
-
-#login-sheet-form .submit-group .btn {
-  padding: 18.48px 46.2px; /* 12px * 1.54, 30px * 1.54 */
-  font-size: 23.1px; /* 15px * 1.54 */
-  background: #8b0000; /* Changed from #1b263b */
-  border-radius: 7.7px;
-}
-
-/* Error messages */
-#login-sheet-form .error {
-  color: #a61c1c;
-  font-size: 0.8em;
-  margin-top: 3px;
-}
-
-#login-sheet-form .submit-group .btn:hover {
-  background: #660000; /* Changed from #14213d to darker red */
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  #login-sheet-form {
-    padding: 23.1px; /* 15px * 1.54 */
-    gap: 12.32px 18.48px; /* 8px * 1.54, 12px * 1.54 */
-  }
-
-  #login-sheet-form input,
-  #login-sheet-form select,
-  #login-sheet-form textarea {
-    padding: 9.24px 12.32px; /* 6px * 1.54, 8px * 1.54 */
-    font-size: 18.48px; /* 12px * 1.54 */
-    height: 49.28px; /* 32px * 1.54 */
-  }
-
-  #login-sheet-form textarea {
-    height: 77px; /* 50px * 1.54 */
-  }
-
-  #login-sheet-form .submit-group {
-    grid-column: 1 / -1;
-  }
-  #login-sheet-form .submit-group .btn {
-    width: 100%;
-    max-width: 308px; /* 200px * 1.54 */
-  }
-
-  #login-sheet-form .form-group-span-3 {
-    grid-column: span 1;
-  }
-}
-
-/* Remove unnecessary styles */
-#login-sheet-form .form-group-span-2,
-#login-sheet-form .form-group-span-4 {
-  grid-column: auto; /* Reset to default */
-}
-
-#login-sheet-form .form-group:nth-child(7) {
-  margin-bottom: 0; /* Reset */
-}
-
-/* Field Specific Adjustments */
-
-#gender {
-  width: 308px; /* 200px * 1.54 */
-}
-
-#blood_pressure input {
-  width: 231px; /* 150px * 1.54 */
-}
-
-#age,
-#role {
-  margin-bottom: 12.32px; /* 8px * 1.54 */
-}
-
-/* Label Styling */
-.section-group label {
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 2px;
-}
-
-/* Dark Mode for Section Group Labels */
-body.dark-mode .section-group label {
-  color: #ccc;
-}
-
-/* Value Display */
-.value-display {
-  font-weight: 600;
-  color: #2b2b2b;
-  padding: 6px;
-  background: white;
-  border: 1px solid #d9d9d9;
-  border-radius: 3px;
-}
-
-/* Dark Mode for Value Display */
-body.dark-mode .value-display {
-  color: #e0e0e0;
-  background: #888;
-  border: 1px solid #777;
-}
-
-#login-sheet-form .form-group-span-3 {
-  grid-column: span 3;
-}
-
-#login-sheet-form .form-group-span-4 {
-  grid-column: span 4;
-}
-
-#login-sheet-form label {
-  font-weight: 600;
-  color: #2b2b2b;
-  font-size: 13px; /* Smaller labels */
-  margin-bottom: 3px;
-}
-
-/* Compact Form Elements */
-.compact-select,
-.narrow-field {
-  padding: 6px 8px !important;
-  font-size: 13px;
-  height: 34px;
-}
-
-.form-group-span-3 {
-  grid-column: span 3;
-}
-
-/* Tight spacing between label and input */
-#login-sheet-form label {
-  margin-bottom: 2px;
-}
-
-#login-sheet-form input,
-#login-sheet-form select,
-#login-sheet-form textarea {
-  width: 100%;
-  padding: 12.32px; /* 8px * 1.54 */
-  font-size: 21.56px; /* 14px * 1.54 */
-  height: 58.52px; /* 38px * 1.54 */
-  border: 1.54px solid #d9d9d9;
-  border-radius: 4.62px; /* 3px * 1.54 */
-  box-sizing: border-box;
-  background: #fff;
-  transition: all 0.308s ease; /* 0.2s * 1.54 */
-}
-
-#login-sheet-form input:focus,
-#login-sheet-form select:focus,
-#login-sheet-form textarea:focus {
-  border-color: #8b0000; /* Changed from #1b263b */
-  outline: none;
-}
-
-#login-sheet-form input[type="time"] {
-  padding-right: 8px;
-}
-
-#login-sheet-form select {
-  appearance: none;
-  background: url('data:image/svg+xml;utf8,<svg fill="gray" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>')
-    no-repeat right 10px center;
-  background-size: 12px;
-  background-position: right 8px center; /* Adjust dropdown arrow position */
-  padding-right: 25px; /* Less space for dropdown arrow */
-}
-
-#login-sheet-form textarea {
-  resize: vertical;
-  height: 107.8px; /* 70px * 1.54 */
-  padding: 8px;
-}
-
-#login-sheet-form .error {
-  color: #a61c1c;
-  font-size: 0.8em;
-  margin-top: 3px;
-}
-
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  #login-sheet-form input,
-  #login-sheet-form select,
-  #login-sheet-form textarea {
-    padding: 6px 8px;
-    font-size: 12px;
-    height: 32px;
-  }
-
-  #login-sheet-form textarea {
-    min-height: 50px;
-  }
-}
-
-/* Style the submit button container */
-#login-sheet-form .submit-group {
-  grid-column: 1 / -1;
-  text-align: left; /* Align button to the left as in the image */
-}
-
-#login-sheet-form .submit-group .btn {
-  width: auto;
-  padding: 10px 25px;
-  background: #8b0000; /* Changed from #1b263b */
-  color: #fff;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: #8b0000 0.3s ease;
-}
-
-#login-sheet-form .submit-group .btn:hover {
-  background: #660000; /* Changed from #14213d */
-}
-
-/* Add specific styles if needed for alignment */
-#login-sheet-form .form-group.align-end {
-  justify-content: flex-end; /* Aligns label/input to bottom if needed */
-}
-
-/* Style for the Medicine Select Dropdown */
-#login-sheet-form select#medicine {
-  appearance: none; /* Remove default styling */
-  background: url('data:image/svg+xml;utf8,<svg fill="gray" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>')
-    no-repeat right 10px center; /* Custom dropdown arrow */
-  background-size: 12px;
-  padding-right: 30px; /* Add padding to prevent text overlap with the arrow */
-  font-size: 14px;
-  color: #2b2b2b;
-  border: 1px solid #d9d9d9;
-  border-radius: 3px;
-  transition: border-color 0.3s ease;
-  width: 100%; /* Ensure it takes full width of the container */
-}
-
-/* Dark Mode for Medicine Select */
-body.dark-mode #login-sheet-form select#medicine {
-  color: #ffffff;
-  background-color: #3d3c3c;
-  border: 1px solid #777;
-}
-
-#login-sheet-form select#medicine:focus {
-  border-color: #8b0000; /* Changed from #1b263b */
-  outline: none;
-}
-
-/* Form Group for Medicine */
-#login-sheet-form .form-group:nth-child(7) {
-  /* Assuming Medicine is the 7th form group */
-  margin-bottom: 20px;
-}
-
-#login-sheet-form .form-group:nth-child(7) label {
-  font-weight: 600;
-}
-
-#login-sheet-form .form-group:nth-child(7) select {
-  width: 100%;
-}
-
-/* Responsive Styles for Medicine Select */
-@media (max-width: 768px) {
-  #login-sheet-form .form-group:nth-child(7) {
-    grid-column: span 1; /* Ensure it spans a single column on small screens */
-  }
-
-  #login-sheet-form select#medicine {
-    width: 100%;
-    max-width: none; /* Remove max-width for full width */
-  }
-}
-
-/* Add Entry Button */
-.btn {
-  grid-column: span 2;
-  width: 150px; /* This is from your existing .btn class, but we’ll override for table-actions */
-  padding: 10px;
-  background: #8b0000; /* Changed from #1b263b */
-  color: #fff;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background 0.3s ease;
-}
-
-/* Dark Mode for Buttons */
-body.dark-mode .btn {
-  background: #0056b3;
-  border: 1px solid #0056b3;
-}
-
-body.dark-mode .btn:hover {
-  background: #003d82;
-}
-
-.btn:hover {
-  background: #660000; /* Changed from #14213d */
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .dashboard-container {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    padding: 10px;
-  }
-
-  .main-content {
-    max-width: 1400px; /* Constrain width for ultra-wide screens */
-    margin: 0 auto; /* Center content */
-  }
-
-  #login-sheet-form {
-    grid-template-columns: 1fr;
-  }
-
-  /* Responsive Adjustments */
-  @media (max-width: 1600px) {
-    #login-sheet-form {
-      max-width: 1000px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    #login-sheet-form {
-      grid-template-columns: 1fr;
-      padding: 25px;
-    }
-
-    /* Full width for all elements on mobile */
-    #login-sheet-form .form-group,
-    #login-sheet-form [class*="form-group-span"] {
-      grid-column: span 1 !important;
-    }
-  }
-  .btn {
-    width: 100%;
-    max-width: 150px;
-  }
-}
-
-/* Login Page */
-body.login-page {
-  background: #f8f9fa; /* Consistent formal background */
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Dark Mode for Login Page */
-body.dark-mode.login-page {
-  background: #333;
-}
-
-body.dark-mode .login-box {
-  background: #777;
-  border: 1px solid #888;
-}
-
-body.dark-mode .login-box h2 {
-  color: #ffffff;
-}
-
-body.dark-mode .login-box label {
-  color: #e0e0e0;
-}
-
-body.dark-mode .login-box input[type="text"],
-body.dark-mode .login-box input[type="password"],
-body.dark-mode .login-box select {
-  background: #888;
-  color: #ffffff;
-  border: 1px solid #777;
-}
-
-body.dark-mode .login-btn {
-  background: #0056b3;
-}
-
-body.dark-mode .login-btn:hover {
-  background: #003d82;
-}
-
-body.dark-mode .error-message {
-  color: #ff6666;
-}
-
-.login-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.logo {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-}
-
-.logo img {
-  width: 200px;
-}
-
-/* Login Box */
-.login-box {
-  background: #fff;
-  padding: 46.2px; /* 30px * 1.54 */
-  border-radius: 9.24px; /* 6px * 1.54 */
-  box-shadow: 0 3.08px 6.16px rgba(0, 0, 0, 0.05); /* 2px * 1.54, 4px * 1.54 */
-  width: 616px; /* 400px * 1.54 */
-  text-align: center;
-  border: 1.54px solid #d9d9d9;
-}
-
-.login-box h2 {
-  margin: 0 0 30.8px;
-  color: #8b0000; /* Changed from #1b263b */
-  font-size: 36.96px; /* 24px * 1.54 */
-  font-weight: normal;
-}
-
-.login-box label {
-  display: block;
-  text-align: left;
-  margin: 10px 0 5px;
-  color: #2b2b2b;
-  font-size: 14px;
-}
-
-.login-box input[type="text"],
-.login-box input[type="password"],
-.login-box select {
-  width: 100%;
-  padding: 15.4px; /* 10px * 1.54 */
-  margin-bottom: 23.1px;
-  border: 1.54px solid #d9d9d9;
-  border-radius: 7.7px;
-  box-sizing: border-box;
-  font-size: 21.56px; /* 14px * 1.54 */
-}
-
-.login-btn {
-  width: 100%;
-  padding: 10px;
-  background: #c9a227; /* Muted gold for formality */
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.login-btn:hover {
-  background: #b38e22; /* Darker gold on hover */
-}
-
-.error-message {
-  color: #a61c1c;
-  font-size: 14px;
-  margin-bottom: 10px;
-  text-align: left;
-}
-
-/* Dashboard Page: Header Actions (Search Bar and Buttons) */
-.header-actions {
-  display: flex;
-  align-items: center; /* Vertically align items */
-  margin-bottom: 25px;
-  flex-wrap: nowrap; /* Prevent wrapping unless absolutely necessary */
-  gap: 15px; /* Consistent spacing between elements */
-  padding: 10px 0;
-  border-bottom: 1px solid #d9d9d9;
-}
-
-body.dark-mode .search-bar input {
-  background: #888;
-  color: #ffffff;
-  border: 1px solid #777;
-}
-
-body.dark-mode .clear-btn {
-  background-color: #1e1e1e;
-  color: #d30a0a;
-  border: 1px solid #d30a0a;
-}
-
-body.dark-mode .clear-btn:hover {
-  background: #821616;
-  color: #e0e0e0;
-  border: 1px solid #821616;
-}
-
-/* Add specific styles for PDF and Excel buttons in dark mode */
-body.dark-mode .table-actions .download-pdf-btn2 {
-  background-color: #1e1e1e; /* Dark teal for PDF button */
-  border-color: #05a3ca;
-  color: #e0e0e0;
-  border: 1px solid #05a3ca;
-}
-
-body.dark-mode .table-actions .download-pdf-btn2:hover {
-  background-color: #05a3ca;
-  border-color: #05a3ca;
-  border: 1px solid #05a3ca;
-}
-
-body.dark-mode .table-actions .download-excel-btn {
-  background-color: #1e1e1e; /* Dark green for Excel button */
-  border-color: #1e7e34;
-  color: #e0e0e0;
-}
-
-body.dark-mode .table-actions .download-excel-btn:hover {
-  background-color: #19692c; /* Darker green on hover */
-  border-color: #19692c;
-}
-
-body.dark-mode .table-actions button:nth-child(3) {
-  background: #0056b3;
-}
-
-body.dark-mode .table-actions button:nth-child(3):hover {
-  background: #003d82;
-}
-
-.search-bar {
-  flex: 1; /* Take up remaining space */
-  max-width: none; /* Remove max-width to allow full stretch */
-  min-width: 200px; /* Ensure it doesn’t collapse too much */
-}
-
-.search-bar input {
-  width: 100%;
-  height: 58.52px; /* 34px * 1.54 */
-  padding: 12.32px; /* 8px * 1.54 */
-  border: 1.54px solid #d9d9d9;
-  border-radius: 7.7px;
-  box-sizing: border-box;
-  font-size: 21.56px; /* 14px * 1.54 */
-}
-
-.search-bar input:focus {
-  border-color: #8b0000; /* Changed from #1b263b */
-  outline: none;
-}
-
-.table-actions {
-  display: flex;
-  align-items: center; /* Vertically align buttons */
-  gap: 10px; /* Space between buttons */
-  flex-wrap: nowrap; /* Keep buttons on one line */
-  margin-left: auto; /* Push buttons to the right */
-}
-
-.table-actions button {
-  height: 52.36px; /* 34px * 1.54 */
-  padding: 0 24.64px; /* 16px * 1.54 */
-  border: none;
-  border-radius: 7.7px; /* 5px * 1.54 */
-  cursor: pointer;
-  box-sizing: border-box;
-  font-size: 21.56px; /* 14px * 1.54 */
-  font-family: "Source Sans Pro", sans-serif;
-  transition: background-color 0.3s ease, transform 0.1s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  vertical-align: middle;
-}
-
-/* Clear Button Specific Styles (already in your style.css) */
-.clear-btn {
-  background: #d30a0a; /* Matches the red in the image */
-  color: #fff;
-}
-
-.clear-btn:hover {
-  background: #821616; /* Darker red on hover, matches your existing style */
-  transform: translateY(-1px); /* Subtle lift effect */
-}
-
-/* Bootstrap-like Utility Classes (me-2, mb-1, mb-md-0) */
-.me-2 {
-  margin-right: 0.5rem; /* Adds right margin (8px in Bootstrap) */
-}
-
-.mb-1 {
-  margin-bottom: 0.25rem; /* Adds bottom margin (4px in Bootstrap) */
-}
-
-/* Update Button */
-.update-btn {
-  background: #0d3c93; /* Matches image blue */
-  color: #fff;
-}
-
-.update-btn:hover {
-  background: #14213d;
-  transform: translateY(-1px);
-}
-
-/* Download PDF Button */
-.download-pdf-btn {
-  background: #05a3ca; /* Matches image teal */
-  color: #fff;
-}
-
-.download-pdf-btn:hover {
-  background: #044758;
-  transform: translateY(-1px);
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .header-actions {
-    flex-wrap: wrap; /* Allow wrapping on small screens */
-  }
-
-  .search-bar {
-    flex: 1 1 100%; /* Full width on small screens */
-    margin-bottom: 10px;
-  }
-
-  .table-actions {
-    flex: 1 1 100%; /* Full width for buttons */
-    justify-content: flex-end; /* Keep buttons aligned right */
-  }
-}
-
-/* Download Excel Button (Visible in History Menu Dashboard) */
-.table-actions button:nth-child(3) {
-  /* Targeting the "Download Excel" button */
-  background: #8b0000; /* Changed from #1b263b */
-  color: #fff;
-}
-
-.table-actions button:nth-child(3):hover {
-  background: #660000; /* Changed from #14213d */
-  transform: translateY(-1px);
-}
-
-/* Table Styles */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow */
-  min-height: 100px;
-  table-layout: auto;
-  border: 1px solid #000000; /* Light border for formality */
-}
-
-/* Table Styles */
-table th,
-table td {
-  padding: 18.48px; /* 12px * 1.54 */
-  text-align: left;
-  border-bottom: 1.54px solid #000000;
-  font-size: 21.56px; /* 14px * 1.54 */
-  color: #2b2b2b;
-}
-
-table th {
-  background: #8b0000; /* Changed from #012465 */
-  color: #fff;
-  font-weight: 600; /* Slightly bolder */
-  text-transform: uppercase; /* Uppercase for formality */
-  letter-spacing: 0.5px; /* Subtle spacing */
-}
-
-table:empty::after {
-  content: "No items available.";
-  display: block;
-  text-align: center;
-  padding: 20px;
-  color: #666;
-  font-style: italic;
-  font-size: 14px;
-}
-
-/* Dark Mode for Empty Table Message */
-body.dark-mode table:empty::after {
-  color: #ccc;
-}
-
-table th:nth-child(12),
-table td:nth-child(12) {
-  text-align: center;
-}
-table th:nth-child(10),
-table td:nth-child(10) {
-  text-align: center;
-}
-
-/* Responsive Table */
-@media (max-width: 768px) {
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-}
-
-/* Inventory Form */
-.inventory-form,
-.excel-import {
-  margin-top: 20px;
-  background: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  max-width: 600px;
-}
-
-/* Dark Mode for Inventory Form and Excel Import */
-body.dark-mode .inventory-form,
-body.dark-mode .excel-import {
-  background: #777;
-  border: 1px solid #888;
-}
-
-body.dark-mode .inventory-form h3,
-body.dark-mode .excel-import h3 {
-  color: #ffffff;
-}
-
-body.dark-mode .inventory-form label,
-body.dark-mode .excel-import label {
-  color: #e0e0e0;
-}
-
-body.dark-mode .inventory-form input,
-body.dark-mode .inventory-form select,
-body.dark-mode .excel-import input[type="file"] {
-  background: #888;
-  color: #ffffff;
-  border: 1px solid #777;
-}
-
-.inventory-form h3,
-.excel-import h3 {
-  margin: 0 0 20px;
-  font-size: 18px;
-  font-weight: normal;
-  color: #8b0000; /* Changed from #1b263b */
-}
-
-.inventory-form label,
-.excel-import label {
-  display: block;
-  margin: 10px 0 5px;
-  font-weight: 600;
-  color: #2b2b2b;
-}
-
-.inventory-form input,
-.inventory-form select,
-.excel-import input[type="file"] {
-  width: 100%;
-  max-width: 300px;
-  padding: 8px;
-  border: 1px solid #d9d9d9;
-  border-radius: 5px;
-  box-sizing: border-box;
-  display: block;
-  font-size: 14px;
-}
-
-/* Remove Button */
-.remove-btn {
-  background: #a61c1c;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  height: 52.36px; /* 34px * 1.54 */
-  padding: 0 24.64px; /* 16px * 1.54 */
-  border: none;
-  border-radius: 7.7px; /* 5px * 1.54 */
-  cursor: pointer;
-  box-sizing: border-box;
-  font-size: 21.56px; /* 14px * 1.54 */
-}
-
-/* Dark Mode for Remove Button */
-body.dark-mode .remove-btn {
-  background: #d30a0a;
-}
-
-body.dark-mode .remove-btn:hover {
-  background: #821616;
-}
-
-.remove-btn:hover {
-  background: #821616;
-}
-
-/* Print Styles */
-@media print {
-  body * {
-    visibility: hidden;
-  }
-  #print-preview,
-  #print-preview * {
-    visibility: visible;
-  }
-  #print-preview {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-  }
-  .dashboard-container,
-  .sidebar,
-  .main-content,
-  .header-actions,
-  #dashboard-table {
-    display: none !important;
-  }
-}
-
-/* Additional Styles */
-.header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-/* Dark Mode for Header */
-body.dark-mode .header {
-  color: #ffffff;
-}
-
-.info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-/* Dark Mode for Info */
-body.dark-mode .info {
-  color: #e0e0e0;
-}
-
-.details {
-  margin-top: 20px;
-}
-
-/* Dark Mode for Details */
-body.dark-mode .details {
-  color: #e0e0e0;
-}
-
-.details p {
-  margin: 5px 0;
-}
-
-.history-section {
-  margin-top: 20px;
-}
-
-/* Dark Mode for History Section */
-body.dark-mode .history-section {
-  color: #e0e0e0;
-}
-
-.history-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-.history-table th,
-.history-table td {
-  border: 1px solid #d9d9d9;
-  padding: 8px;
-  text-align: left;
-}
-
-.history-table th {
-  background-color: #f2f2f2;
-  color: #2b2b2b;
-}
-
-@media print {
-  body {
-    margin: 0;
-  }
-}
-
-.inline-form {
-  display: inline;
-}
-
-.non-editable {
-  pointer-events: none; /* Prevents interaction */
-  background-color: #e9ecef; /* Matches readonly input background */
-  opacity: 0.65; /* Mimics disabled look */
-  cursor: not-allowed; /* Indicates it's not editable */
-}
-
-/* Dark Mode for Non-Editable */
-body.dark-mode .non-editable {
-  background-color: #777;
-  opacity: 0.65;
-}
-
-.student-lookup {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-#student-lookup-input {
-  padding: 5px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-/* Dark Mode for Student Lookup Input */
-body.dark-mode #student-lookup-input {
-  background: #888;
-  color: #ffffff;
-  border: 1px solid #777;
-}
-
-#student-lookup-btn {
-  padding: 5px 10px;
-  font-size: 14px;
-  background-color: #4caf50; /* Green to match common button styles */
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-/* Dark Mode for Student Lookup Button */
-body.dark-mode #student-lookup-btn {
-  background-color: #4caf50;
-}
-
-body.dark-mode #student-lookup-btn:hover {
-  background-color: #45a049;
-}
-
-#student-lookup-btn:hover {
-  background-color: #45a049;
-}
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.pagination a.btn {
-  padding: 5px 10px;
-  margin: 0 2px;
-  text-decoration: none;
-  color: #333;
-  background-color: #fff;
-  border: 1px solid #666;
-  border-radius: 4px;
-}
-
-.pagination a.btn.active {
-  background-color: #007bff;
-  color: #fff;
-  border-color: #007bff;
-}
-
-.pagination a.btn.previous,
-.pagination a.btn.next {
-  background-color: #333;
-  color: #fff;
-  border-color: #333;
-}
-
-.pagination span.ellipsis {
-  padding: 5px 10px;
-  color: #666;
-}
-
 .theme-switch-wrapper {
   display: flex;
   align-items: center;
-  padding: 15px 20px;
-  margin-top: auto;
-  border-top: 1px solid #34495e;
-  gap: 12px;
+  margin-top: auto; /* Pushes to bottom */
+  padding: 10px;
+  font-size: 14px;
 }
 
 .theme-switch-wrapper em {
-  font-size: 0.9rem;
-  color: #ecf0f1;
-  white-space: nowrap;
-  font-style: normal;
+  margin-left: 10px;
 }
 
 .theme-switch {
-  position: relative;
   display: inline-block;
-  width: 50px;
-  height: 24px;
-  flex-shrink: 0;
+  height: 24px; /* Adjusted size */
+  position: relative;
+  width: 44px; /* Adjusted size */
 }
 
 .theme-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+  display: none;
 }
 
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
+  background-color: #ccc;
   bottom: 0;
-  background-color: #767f8c;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
   transition: 0.4s;
 }
 
 .slider:before {
+  background-color: #fff;
+  bottom: 3px; /* Adjusted position */
+  content: "";
+  height: 18px; /* Adjusted size */
+  left: 3px; /* Adjusted position */
   position: absolute;
-  content: "☀️";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
   transition: 0.4s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2em;
-  color: #333;
+  width: 18px; /* Adjusted size */
 }
 
 input:checked + .slider {
-  background-color: #0056b3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #0056b3;
+  background-color: #555; /* Darker toggle background when active */
 }
 
 input:checked + .slider:before {
-  transform: translateX(26px);
-  content: "🌙";
-  background-color: #333;
-  color: #eee;
+  transform: translateX(20px); /* Adjusted translation */
 }
 
 .slider.round {
-  border-radius: 24px;
+  border-radius: 24px; /* Adjusted for new size */
 }
 
 .slider.round:before {
   border-radius: 50%;
 }
 
-/* Inventory Form Inputs */
-.inventory-form input[type="text"],
-.inventory-form input[type="number"],
-.inventory-form select {
-  width: 100%;
-  max-width: 800px;
-  /* 300px * 1.54 */
-  padding: 12.32px;
-  /* 8px * 1.54 */
-  border: 1.54px solid #d9d9d9;
-  /* 1px * 1.54 */
-  border-radius: 7.7px;
-  /* 5px * 1.54 */
-  box-sizing: border-box;
-  font-size: 21.56px;
-  /* 14px * 1.54 */
-  height: 58.52px;
-  /* 38px * 1.54 */
+/* Main Content */
+.main-content {
+  margin-left: 260px; /* Same as sidebar width */
+  flex-grow: 1;
+  padding: 30px;
+  background-color: var(--bg-main);
+  overflow-y: auto; /* Allow scrolling for content */
 }
 
-/* Excel Import Input */
-.excel-import input[type="file"] {
-  width: 100%;
-  max-width: 462px;
-  padding: 12.32px;
-  border: 1.54px solid #d9d9d9;
-  border-radius: 7.7px;
-  box-sizing: border-box;
-  font-size: 21.56px;
-  height: 58.52px;
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
 }
 
-/* Search Bar Input */
-.search-bar input[type="text"] {
-  width: 100%;
-  height: 58.52px;
-  /* 34px * 1.54 */
-  padding: 12.32px;
-  /* 8px * 1.54 */
-  border: 1.54px solid #d9d9d9;
-  border-radius: 7.7px;
-  box-sizing: border-box;
-  font-size: 21.56px;
-  /* 14px * 1.54 */
+.main-content > h1 {
+  font-size: 28px;
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-bottom: 20px; /* Space before the new controls bar */
 }
 
-body.dark-mode .inventory-form,
-body.dark-mode .excel-import {
-  background-color: #000000;
+.header-actions-group {
+  display: flex;
+  gap: 10px;
 }
 
-body.dark-mode .inventory-form input[type="text"],
-body.dark-mode .inventory-form input[type="number"],
-body.dark-mode .inventory-form select,
-body.dark-mode .excel-import input[type="file"],
-body.dark-mode .search-bar input[type="text"] {
-  background-color: #000000;
-  color: #e0e0e0;
-  border: 1.54px solid #555;
-  font-size: 21.56px;
-  height: 58.52px;
-  padding: 12.32px;
+.header-actions-group .btn-action {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s;
+}
+.header-actions-group .btn-action:hover {
+  opacity: 0.85;
 }
 
-body.dark-mode .btn {
-  background-color: #0056b3;
-  color: #ffffff;
-}
+.btn-clear-inventory {
+  background-color: var(--button-primary-bg);
+} /* Blue */
+.btn-download-excel {
+  background-color: var(--button-green-bg);
+} /* Green */
+.btn-download-pdf {
+  background-color: var(--button-red-bg);
+} /* Red */
 
-body.dark-mode .btn:hover {
-  background-color: #004494;
+/* Messages */
+.success-message,
+.error-message {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-size: 14px;
 }
-
-body.dark-mode .download-pdf-btn {
-  background-color: #1e1e1e;
-  color: #05a3ca;
-  border: 1px solid #05a3ca;
+.success-message {
+  background-color: #d1fae5; /* Light green */
+  color: #065f46; /* Dark green text */
+  border: 1px solid #a7f3d0;
 }
-
-body.dark-mode .download-pdf-btn:hover {
-  background-color: #05a3ca;
-  color: #ffffff;
-  border: 1px solid #05a3ca;
+.error-message {
+  background-color: #fee2e2; /* Light red */
+  color: #991b1b; /* Dark red text */
+  border: 1px solid #fecaca;
 }
-
-body.dark-mode .pagination a.btn {
-  background-color: #333;
-  color: #e0e0e0;
-  border-color: #555;
-}
-
-body.dark-mode .pagination a.btn.active {
-  background-color: #007bff;
-  color: #fff;
-  border-color: #007bff;
-}
-
-body.dark-mode .pagination a.btn.previous,
-body.dark-mode .pagination a.btn.next {
-  background-color: #444;
-  color: #fff;
-  border-color: #444;
-}
-
 body.dark-mode .success-message {
-  color: #28a745;
+  background-color: #064e3b;
+  color: #a7f3d0;
+  border-color: #059669;
 }
-
 body.dark-mode .error-message {
-  color: #dc3545;
+  background-color: #7f1d1d;
+  color: #fca5a5;
+  border-color: #b91c1c;
 }
 
-body.dark-mode label {
-  color: #e0e0e0;
+body.dark-mode .inventory-form.highlighted {
+  background-color: rgb(10, 4, 95);
+  transition: background-color 0.3s;
 }
-
-body.dark-mode table {
-  background-color: #777;
-  border: 1px solid #ffffff;
-}
-
-body.dark-mode table th {
-  background-color: #003d82;
+body.dark-mode .inventory-form.highlighted h3 {
   color: #ffffff;
-  border: 1px solid #ffffff;
 }
 
-body.dark-mode table td {
-  background-color: #000000;
-  color: #e0e0e0;
-  border: 1px solid #ffffff;
+body.dark-mode .inventory-form.highlighted label {
+  color: #ffffff;
+}
+
+/* Table */
+#table-inventory {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+  background-color: var(--bg-card);
+  border-radius: 12px;
+  overflow: hidden; /* For border-radius on table */
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+#table-inventory th,
+#table-inventory td {
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 14px;
+}
+
+#table-inventory th {
+  background-color: var(--table-header-bg);
+  color: var(--table-header-text);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+#table-inventory tr:last-child td {
+  border-bottom: none;
+}
+
+#table-inventory tr:hover {
+  background-color: var(--border-color); /* Subtle hover */
+}
+body.dark-mode #table-inventory tr:hover {
+  background-color: #2c3a4e;
+}
+
+.action-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+  margin-right: 5px;
+  transition: opacity 0.2s;
+}
+.action-btn:hover {
+  opacity: 0.8;
 }
 
 .edit-btn {
-  background: #f1c40f;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  height: 52.36px;
-  /* 34px * 1.54 */
-  padding: 0 24.64px;
-  /* 16px * 1.54 */
-  border: none;
-  border-radius: 7.7px;
-  /* 5px * 1.54 */
-  cursor: pointer;
-  box-sizing: border-box;
-  font-size: 21.56px;
-  /* 14px * 1.54 */
+  height: 35px;
+  width: 50px;
+  background-color: var(--button-yellow-bg);
+}
+.remove-btn {
+  background-color: var(--button-red-bg);
 }
 
-body.dark-mode .edit-btn {
-  background: #f1c40f;
+.expiration-date[style*="color: red"] {
+  color: var(--expiration-expired-text) !important;
+  font-weight: 500;
+}
+.expiration-date[style*="color: blue"] {
+  color: var(--expiration-soon-text) !important;
+  font-weight: 500;
+}
+/* Add other colors if your PHP logic uses them */
+
+/* Forms Wrapper */
+.forms-wrapper {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 25px;
+  margin-bottom: 30px;
 }
 
-body.dark-mode .edit-btn:hover {
-  background: #e0a800;
+.inventory-form,
+.excel-import {
+  background-color: var(--bg-card);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  flex: 1; /* Distribute space */
+  min-width: 320px; /* Minimum width before wrapping */
 }
 
-.quantity-field {
-  display: none;
+.inventory-form h3,
+.excel-import h3 {
+  font-size: 18px;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  font-weight: 600;
 }
 
-.quantity-field.visible {
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
   display: block;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="file"],
+.form-group select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--input-border);
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+.form-group input[type="file"] {
+  padding: 8px 12px; /* Specific padding for file input */
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--button-primary-bg);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
 
 .date-dropdowns {
   display: flex;
   gap: 10px;
-  margin-bottom: 10px;
 }
-
-/* Date Dropdowns */
 .date-dropdowns select {
   flex: 1;
-  padding: 12.32px;
-  /* 8px * 1.54 */
-  border: 1.54px solid #555;
-  border-radius: 7.7px;
-  /* 4px * 1.54 */
-  background-color: #ffffff;
-  color: #000000;
-  font-size: 21.56px;
-  /* 14px * 1.54 */
-  height: 58.52px;
-  /* 38px * 1.54 */
-}
-
-body.dark-mode .date-dropdowns select {
-  background-color: #000000;
-  color: #e0e0e0;
-  border: 1.54px solid #555;
-  font-size: 21.56px;
-  height: 58.52px;
-  padding: 12.32px;
 }
 
 .btn,
-.btn-primary,
+button[type="submit"],
 .btn-secondary {
-  margin-top: 10px;
-  padding: 15.4px;
-  /* 10px * 1.54 */
-  font-size: 21.56px;
-  /* 14px * 1.54 */
-  border-radius: 7.7px;
-  /* 4px * 1.54 */
-}
-
-.btn-secondary {
-  width: 25%;
-  background-color: #6c757d;
-  color: #fff;
+  /* General button styling */
+  padding: 10px 20px;
   border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, opacity 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
+button[type="submit"].w-100,
+.btn.w-100 {
+  width: 100%;
+}
+
+button[type="submit"],
+.btn-primary {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
+}
+button[type="submit"]:hover,
+.btn-primary:hover {
+  opacity: 0.85;
+}
+
+.btn-secondary {
+  background-color: var(--button-secondary-bg);
+  color: var(--button-secondary-text);
+  width: 100%; /* For cancel edit button */
+}
 .btn-secondary:hover {
-  background-color: #5a6268;
-}
-.forms-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  opacity: 0.85;
 }
 
-@media (min-width: 1200px) {
+/* Pagination */
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+.pagination a,
+.pagination span {
+  display: inline-block;
+  padding: 8px 12px;
+  margin: 0 3px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.pagination a:hover {
+  background-color: var(--border-color);
+}
+.pagination a.active {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  border-color: var(--button-primary-bg);
+}
+.pagination .ellipsis {
+  border: none;
+  background-color: transparent;
+}
+
+/* New styles for the wrapper */
+.top-controls-bar {
+  display: flex;
+  justify-content: space-between; /* Pushes search to left, actions to right */
+  align-items: center;
+  margin-bottom: 25px; /* Space before messages/table */
+  gap: 20px; /* Space between search and actions group */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+/* Styles for the search bar container */
+.search-bar {
+  flex-grow: 1; /* Allows search bar to take available space on the left */
+  display: flex; /* To help align items if you add more to the form */
+  max-width: 1600px; /* Adjust as needed, or remove for full flexible width */
+}
+
+.search-bar form {
+  width: 100%;
+  display: flex;
+  position: relative; /* For potential icon inside input */
+}
+
+.search-bar input[type="text"] {
+  width: 100%;
+  padding: 10px 12px; /* Match button height */
+  /* If you add an icon inside search: padding-left: 35px; */
+  border: 1px solid var(--input-border);
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.search-bar input[type="text"]:focus {
+  outline: none;
+  border-color: var(--button-primary-bg); /* Or your theme's focus color */
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2); /* Example focus shadow */
+}
+
+.search-bar a {
+  /* Reset search link */
+  align-self: center;
+  color: var(--button-primary-bg);
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-bar-container .search-bar {
+  flex-grow: 1;
+}
+
+.search-bar-container .header-actions-group {
+  flex-shrink: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
   .forms-wrapper {
-    flex-direction: row;
+    flex-direction: column;
+  }
+  .inventory-form,
+  .excel-import {
+    min-width: 100%; /* Forms take full width */
   }
 }
 
-.forms-wrapper .inventory-form {
-  flex: 1;
+@media (max-width: 768px) {
+  .sidebar {
+    position: static; /* Or implement a toggleable sidebar */
+    width: 100%;
+    height: auto;
+    flex-direction: row; /* Example for a top bar on mobile */
+    align-items: center;
+    padding: 10px;
+  }
+  .sidebar h2 {
+    font-size: 20px;
+    margin-bottom: 0;
+    margin-right: auto;
+  }
+  .sidebar .menu {
+    display: none; /* Hide full menu, implement hamburger */
+  }
+  .sidebar .logout,
+  .theme-switch-wrapper {
+    margin-top: 0;
+  }
+  .main-content {
+    margin-left: 0;
+    padding: 15px;
+  }
+  .main-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .header-actions-group {
+    width: 100%;
+    justify-content: space-around; /* Or flex-start */
+  }
+  .header-actions-group .btn-action {
+    flex-grow: 1; /* Make buttons take available space */
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+  #table-inventory th,
+  #table-inventory td {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+  .action-btn {
+    font-size: 11px;
+    padding: 5px 8px;
+  }
+  .top-controls-bar {
+    flex-direction: column; /* Stack search and actions on small screens */
+    align-items: stretch; /* Make items take full width when stacked */
+  }
+  .search-bar {
+    max-width: 100%; /* Allow search to take full width */
+    margin-bottom: 15px; /* Space when stacked */
+  }
+  .header-actions-group {
+    justify-content: flex-start; /* Align buttons to the start */
+    flex-wrap: wrap; /* Allow buttons to wrap if too many for one line */
+  }
+  .header-actions-group .btn-action {
+    flex-grow: 1; /* Optional: make buttons grow to fill space if desired */
+    min-width: 140px; /* Ensure buttons have a minimum width */
+  }
 }
