@@ -6,6 +6,8 @@ This system is designed to manage and track inventory for a drugstore.
 
 This Drugstore Inventory System is designed to streamline the management of pharmaceutical products and related items within a drugstore setting. It provides a centralized platform for monitoring stock levels, tracking product information (such as name, description, supplier, and expiration date), and generating comprehensive reports for informed decision-making in inventory management. The system aims to improve efficiency, reduce errors, and optimize stock levels to meet customer demand while minimizing waste.
 
+## Problems Encountered
+
 ## Technologies Used
 
 - **PHP:** The system is primarily built using PHP, a server-side scripting language, for handling backend logic and database interactions.
