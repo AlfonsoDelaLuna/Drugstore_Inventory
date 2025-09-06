@@ -8,6 +8,8 @@ This Drugstore Inventory System is designed to streamline the management of phar
 
 ## Problems Encountered
 
+The problems encoutered is when the nurse do inventory, it is usually paper-bases.
+
 ## Technologies Used
 
 - **PHP:** The system is primarily built using PHP, a server-side scripting language, for handling backend logic and database interactions.
