@@ -8,7 +8,9 @@ This Drugstore Inventory System is designed to streamline the management of phar
 
 ## Problems Encountered
 
-The problems encoutered is when the nurse do inventory, it is usually paper-bases.
+The problems encoutered are as follows.
+1. Paper based inventory process.
+2. Wrong information written.
 
 ## Technologies Used
 
