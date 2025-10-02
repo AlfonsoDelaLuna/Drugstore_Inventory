@@ -47,7 +47,3 @@ The problems encoutered are as follows.
       - **Delete Items:** Remove products from the inventory.
 4.  **Reporting:**
     - Access the reporting section to generate reports on stock levels, low-stock items, expired items, and inventory history.
-
-## Additional Information
-
-For more detailed information, refer to the system documentation or contact the system administrator.
