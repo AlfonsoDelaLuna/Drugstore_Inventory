@@ -8,9 +8,17 @@ This Drugstore Inventory System is designed to streamline the management of phar
 
 ## Problems Encountered
 
-The problems encoutered are as follows.
-1. Paper based inventory process.
-2. Wrong information written.
+The major problems observed in the current inventory process are:
+
+1. Paper-based inventory process – Manual recording makes stock monitoring inefficient, disorganized, and prone to damage or loss.
+
+2. Incorrect information recording – Errors in writing product details (such as quantity, supplier, or expiration date) result in unreliable data.
+
+3. Difficulty in monitoring stock levels – Without a centralized system, tracking available products becomes time-consuming and may lead to delays in serving customers.
+
+4. Inability to properly track expiration dates – Medicines may remain unsupervised until expired, leading to waste and potential health risks.
+
+5. Lack of accurate reports for decision-making – Generating reliable reports manually is tedious, limiting the ability to make informed inventory and business decisions.
 
 ## Technologies Used
 
