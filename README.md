@@ -16,33 +16,28 @@ By addressing these points, the system ultimately seeks to improve customer sati
 
 The current inventory management practices within the drugstore face several critical challenges that hinder efficiency, accuracy, and profitability. These issues directly underscore the need for the proposed system and its stated purpose:
 
-1. 
-Inefficient Paper-Based Processes:
+1. Inefficient Paper-Based Processes:
 
 	- Problem: The reliance on manual, paper-based recording makes the entire stock monitoring process highly inefficient, disorganized, and susceptible to physical damage or loss of critical inventory data.
 	- Connection to Purpose: This directly impedes the system's purpose of "optimizing stock management" and "reducing errors" as manual methods are inherently slow and error-prone.
 
-2. 
-Prevalence of Incorrect Information:
+2. Prevalence of Incorrect Information:
 
 	- Problem: Manual entry leads to frequent errors in recording vital product details like quantity, supplier, and expiration dates, resulting in unreliable inventory data that cannot be trusted for operational decisions.
 	- Connection to Purpose: This directly undermines the system's goals of "reducing errors" and making "data-driven decisions," as the foundation of those goals (accurate data) is missing.
 
 
-3. 
-Difficulty in Real-time Stock Monitoring:
+3. Difficulty in Real-time Stock Monitoring:
 
 	- Problem: Without a centralized, automated system, tracking available products is an extremely time-consuming endeavor. This often leads to inaccurate stock visibility and significant delays in fulfilling customer orders or restocking, impacting service quality.
 	- Connection to Purpose: This is a core challenge that the system's purpose of "optimizing stock management" seeks to overcome by providing real-time, centralized visibility.
 
-4. 
-Inadequate Expiration Date Tracking:
+4. Inadequate Expiration Date Tracking:
 
 	- Problem: Medicines and other perishable items frequently remain unsupervised, resulting in expired stock that represents significant financial waste and poses potential health risks if unknowingly dispensed.
 	- Connection to Purpose: This problem highlights the urgent need for the system's capability to track "detailed product information (including expiration dates)" to minimize waste and ensure product safety.
 
-5. 
-Lack of Accurate & Timely Reports for Decision-Making:
+5. Lack of Accurate & Timely Reports for Decision-Making:
 
 	- Problem: Manually generating reliable and comprehensive reports for inventory analysis is a tedious, labor-intensive, and often inaccurate process. This severely limits management's ability to make informed procurement, stocking, and business decisions.
 	- Connection to Purpose: This problem directly demonstrates the necessity for the system's purpose of "informing decisions" through robust and accurate reporting capabilities.
