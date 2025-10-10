@@ -1,24 +1,51 @@
 # Drugstore Inventory System
 
-This system is designed to manage and track inventory for a drugstore.
+It is an inventory management solution designed for drugstores, providing a centralized platform to manage and track pharmaceutical products and related items. It encompasses functionalities for monitoring stock levels, recording comprehensive product details (such as name, description, supplier, and expiration date), and generating various management reports.
 
 ## Purpose
 
-This Drugstore Inventory System is designed to streamline the management of pharmaceutical products and related items within a drugstore setting. It provides a centralized platform for monitoring stock levels, tracking product information (such as name, description, supplier, and expiration date), and generating comprehensive reports for informed decision-making in inventory management. The system aims to improve efficiency, reduce errors, and optimize stock levels to meet customer demand while minimizing waste.
+The purpose of this system is to enhance operational efficiency and accuracy within drugstores by streamlining inventory processes. It aims to achieve this by:
+
+1. Optimizing Stock Management: Ensuring optimal stock levels to meet demand while minimizing overstocking and waste.
+2. Reducing Errors: Automating tracking to significantly decrease manual errors in inventory records.
+3. Informing Decisions: Providing data-driven reports for better planning and procurement.
+
+By addressing these points, the system ultimately seeks to improve customer satisfaction and reduce operational costs.
 
 ## Problems Encountered
 
-The major problems observed in the current inventory process are:
+The current inventory management practices within the drugstore face several critical challenges that hinder efficiency, accuracy, and profitability. These issues directly underscore the need for the proposed system and its stated purpose:
 
-1. Paper-based inventory process – Manual recording makes stock monitoring inefficient, disorganized, and prone to damage or loss.
+1. 
+Inefficient Paper-Based Processes:
 
-2. Incorrect information recording – Errors in writing product details (such as quantity, supplier, or expiration date) result in unreliable data.
+	- Problem: The reliance on manual, paper-based recording makes the entire stock monitoring process highly inefficient, disorganized, and susceptible to physical damage or loss of critical inventory data.
+	- Connection to Purpose: This directly impedes the system's purpose of "optimizing stock management" and "reducing errors" as manual methods are inherently slow and error-prone.
 
-3. Difficulty in monitoring stock levels – Without a centralized system, tracking available products becomes time-consuming and may lead to delays in serving customers.
+2. 
+Prevalence of Incorrect Information:
 
-4. Inability to properly track expiration dates – Medicines may remain unsupervised until expired, leading to waste and potential health risks.
+	- Problem: Manual entry leads to frequent errors in recording vital product details like quantity, supplier, and expiration dates, resulting in unreliable inventory data that cannot be trusted for operational decisions.
+	- Connection to Purpose: This directly undermines the system's goals of "reducing errors" and making "data-driven decisions," as the foundation of those goals (accurate data) is missing.
 
-5. Lack of accurate reports for decision-making – Generating reliable reports manually is tedious, limiting the ability to make informed inventory and business decisions.
+
+3. 
+Difficulty in Real-time Stock Monitoring:
+
+	- Problem: Without a centralized, automated system, tracking available products is an extremely time-consuming endeavor. This often leads to inaccurate stock visibility and significant delays in fulfilling customer orders or restocking, impacting service quality.
+	- Connection to Purpose: This is a core challenge that the system's purpose of "optimizing stock management" seeks to overcome by providing real-time, centralized visibility.
+
+4. 
+Inadequate Expiration Date Tracking:
+
+	- Problem: Medicines and other perishable items frequently remain unsupervised, resulting in expired stock that represents significant financial waste and poses potential health risks if unknowingly dispensed.
+	- Connection to Purpose: This problem highlights the urgent need for the system's capability to track "detailed product information (including expiration dates)" to minimize waste and ensure product safety.
+
+5. 
+Lack of Accurate & Timely Reports for Decision-Making:
+
+	- Problem: Manually generating reliable and comprehensive reports for inventory analysis is a tedious, labor-intensive, and often inaccurate process. This severely limits management's ability to make informed procurement, stocking, and business decisions.
+	- Connection to Purpose: This problem directly demonstrates the necessity for the system's purpose of "informing decisions" through robust and accurate reporting capabilities.
 
 ## Technologies Used
 
