@@ -1,9 +1,7 @@
 # Drugstore Inventory System
-
 It is an inventory management solution designed for drugstores, providing a centralized platform to manage and track pharmaceutical products and related items. It encompasses functionalities for monitoring stock levels, recording comprehensive product details (such as name, description, supplier, and expiration date), and generating various management reports.
 
 ## Purpose
-
 The purpose of this system is to enhance operational efficiency and accuracy within drugstores by streamlining inventory processes. It aims to achieve this by:
 
 1. Optimizing Stock Management: Ensuring optimal stock levels to meet demand while minimizing overstocking and waste.
@@ -11,7 +9,6 @@ The purpose of this system is to enhance operational efficiency and accuracy wit
 3. Informing Decisions: Providing data-driven reports for better planning and procurement.
 
 ## Problems Encountered
-
 The current inventory management practices within the drugstore face several critical challenges that hinder efficiency, accuracy, and profitability. These issues directly underscore the need for the proposed system and its stated purpose:
 
 1. Inefficient Paper-Based Processes:
@@ -21,7 +18,6 @@ The current inventory management practices within the drugstore face several cri
 2. Prevalence of Incorrect Information:
 	- Problem: Manual entry leads to frequent errors in recording vital product details like quantity, supplier, and expiration dates, resulting in unreliable inventory data that cannot be trusted for operational decisions.
 	- Connection to Purpose: This directly undermines the system's goals of "reducing errors" and making "data-driven decisions," as the foundation of those goals (accurate data) is missing.
-
 
 3. Difficulty in Real-time Stock Monitoring:
 	- Problem: Without a centralized, automated system, tracking available products is an extremely time-consuming endeavor. This often leads to inaccurate stock visibility and significant delays in fulfilling customer orders or restocking, impacting service quality.
@@ -36,7 +32,6 @@ The current inventory management practices within the drugstore face several cri
 	- Connection to Purpose: This problem directly demonstrates the necessity for the system's purpose of "informing decisions" through robust and accurate reporting capabilities.
 
 ## Technologies Used
-
 - **PHP:** The system is primarily built using PHP, a server-side scripting language, for handling backend logic and database interactions.
 - **MySQL:** MySQL is used as the relational database management system to store and manage inventory data, user information, and other relevant details.
 - **HTML:** HTML (Hypertext Markup Language) is used to structure the content and layout of the web pages.
@@ -44,7 +39,6 @@ The current inventory management practices within the drugstore face several cri
 - **JavaScript:** JavaScript is used to add interactivity and dynamic functionality to the web pages, enhancing the user experience.
 
 ## Setup Instructions
-
 1.  **Database Setup:**
     - Import the `inventory_db.sql` file into your MySQL database using a tool like phpMyAdmin or MySQL Workbench. This will create the necessary tables and initial data for the system.
 2.  **Configuration:**
@@ -57,7 +51,6 @@ The current inventory management practices within the drugstore face several cri
     - Open your web browser and navigate to the URL where you deployed the system (e.g., `http://localhost/Drugstore_Inventory`).
 
 ## Usage
-
 1.  **Access:**
     - Open your web browser and navigate to the system's URL.
 2.  **Login:**
