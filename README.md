@@ -39,27 +39,52 @@ The current inventory management practices within the drugstore face several cri
 - **JavaScript:** JavaScript is used to add interactivity and dynamic functionality to the web pages, enhancing the user experience.
 
 ## Setup Instructions
-1.  **Database Setup:**
-    - Import the `inventory_db.sql` file into your MySQL database using a tool like phpMyAdmin or MySQL Workbench. This will create the necessary tables and initial data for the system.
-2.  **Configuration:**
-    - Open the `db_connect.php` file in a text editor.
-    - Modify the database connection parameters (host, username, password, database name) to match your MySQL server configuration.
-3.  **Deployment:**
-    - Deploy the entire project folder to a PHP-enabled web server, such as Apache.
-    - Ensure that the web server is configured to correctly handle PHP files.
-4.  **Access:**
-    - Open your web browser and navigate to the URL where you deployed the system (e.g., `http://localhost/Drugstore_Inventory`).
+To set up the Drugstore Inventory System on your local machine, follow these steps:
+
+1.  **Prerequisites:**
+    - Ensure you have a local web server environment installed, such as [XAMPP](https://www.apachefriends.org/index.html) or [WAMP](https://www.wampserver.com/en/). This provides Apache, PHP, and MySQL.
+
+2.  **Download the Project:**
+    - Clone or download this repository to your local machine.
+    - Place the project folder inside the `htdocs` directory of your XAMPP installation (e.g., `c:/xampp/htdocs/Drugstore_Inventory`).
+
+3.  **Database Setup:**
+    - Start your Apache and MySQL services from the XAMPP control panel.
+    - Open your web browser and navigate to `http://localhost/phpmyadmin`.
+    - Create a new database named `inventory_db`.
+    - Select the newly created database and go to the "Import" tab.
+    - Click "Choose File" and select the `inventory_db.sql` file located in the root of the project directory.
+    - Click "Go" to import the database structure and initial data.
+
+4.  **Configuration:**
+    - The database connection is configured in `db_connect.php`. By default, it's set up for a standard XAMPP installation (Host: `localhost`, User: `root`, Password: ``, Database: `inventory_db`). If your setup is different, you will need to modify this file accordingly.
+
+5.  **Access the System:**
+    - Open your web browser and navigate to `http://localhost/Drugstore_Inventory`.
+    - You should now see the login page.
 
 ## Usage
-1.  **Access:**
-    - Open your web browser and navigate to the system's URL.
-2.  **Login:**
-    - Enter your username and password on the login page to access the system's features.
+Once the system is set up, you can start using it to manage your inventory.
+
+1.  **Login:**
+    - Navigate to the application's URL in your web browser.
+    - Use the following default credentials to log in:
+      - **Username:** `admin`
+      - **Password:** `admin`
+    - It is highly recommended to change the default password after your first login for security purposes.
+
+2.  **Dashboard:**
+    - After logging in, you will be directed to the main dashboard, which provides an overview of the inventory, including total products, low-stock items, and expired products.
+
 3.  **Inventory Management:**
-    - Use the navigation menu to access the inventory management section.
-    - From there, you can:
-      - **Add Items:** Add new products to the inventory, providing details such as name, description, expiration date, price, and quantity.
-      - **Edit Items:** Modify the details of existing products, such as updating prices or quantities.
-      - **Delete Items:** Remove products from the inventory.
+    - Navigate to the "Inventory" section to perform the following actions:
+      - **View Products:** See a list of all products with their details.
+      - **Add a New Product:** Click on the "Add New" button to open a form where you can enter the product's name, description, quantity, expiration date, and supplier.
+      - **Edit a Product:** Click the "Edit" button next to a product to update its information.
+      - **Delete a Product:** Click the "Delete" button to remove a product from the inventory.
+
 4.  **Reporting:**
-    - Access the reporting section to generate reports on stock levels, low-stock items, expired items, and inventory history.
+    - The "Reports" section allows you to generate and view various reports, such as:
+      - **Stock Levels:** A complete list of all products and their current quantities.
+      - **Low-Stock Alerts:** A report highlighting products that are below a certain stock threshold.
+      - **Expired Products:** A list of all products that have passed their expiration date.
