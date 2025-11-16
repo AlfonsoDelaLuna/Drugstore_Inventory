@@ -3,14 +3,12 @@ It is an inventory management system designed for drugstores, providing a centra
 
 ## Purpose
 The purpose of this system is to enhance operational efficiency and accuracy within drugstores by streamlining inventory processes. It aims to achieve this by:
-
 1. Optimizing Stock Management: Ensuring optimal stock levels to meet demand while minimizing overstocking and waste.
 2. Reducing Errors: Automating tracking to significantly decrease manual errors in inventory records.
 3. Informing Decisions: Providing data-driven reports for better planning and procurement.
 
 ## Problems Encountered
 The current inventory management practices within the drugstore face several critical challenges that hinder efficiency, accuracy, and profitability. These issues directly underscore the need for the proposed system and its stated purpose:
-
 1. Inefficient Paper-Based Processes:
 	- Problem: The reliance on manual, paper-based recording makes the entire stock monitoring process highly inefficient, disorganized, and susceptible to physical damage or loss of critical inventory data.
 	- Connection to Purpose: This directly impedes the system's purpose of "optimizing stock management" and "reducing errors" as manual methods are inherently slow and error-prone.
