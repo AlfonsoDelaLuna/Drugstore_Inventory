@@ -38,7 +38,6 @@ The current inventory management practices within the drugstore face several cri
 
 ## Setup Instructions
 To set up the Drugstore Inventory System on your local machine, follow these steps:
-
 1.  **Prerequisites:**
     - Ensure you have a local web server environment installed, such as [XAMPP](https://www.apachefriends.org/index.html) or [WAMP](https://www.wampserver.com/en/). This provides Apache, PHP, and MySQL.
 
