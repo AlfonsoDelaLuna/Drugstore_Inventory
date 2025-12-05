@@ -62,7 +62,6 @@ To set up the Drugstore Inventory System on your local machine, follow these ste
 
 ## Usage
 Once the system is set up, you can start using it to manage your inventory.
-
 1.  **Login:**
     - Navigate to the application's URL in your web browser.
     - Use the following default credentials to log in:
