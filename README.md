@@ -1,5 +1,5 @@
 # Drugstore Inventory System
-It is an inventory management system designed for drugstores, providing a centralized platform to manage and track pharmaceutical products and related items. It encompasses functionalities for monitoring stock levels, recording comprehensive product details (such as name, description, number of items, and expiration date), and generating various management reports.
+It is an inventory management system designed for drugstores, providing a centralized platform to manage and track pharmaceutical products. It encompasses functionalities for monitoring stock levels, recording comprehensive product details (such as name, description, number of items, and expiration date), and generating various management reports.
 
 ## Purpose
 The purpose of this system is to enhance operational efficiency and accuracy within drugstores by streamlining inventory processes. It aims to achieve this by:
